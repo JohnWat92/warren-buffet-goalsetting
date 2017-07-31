@@ -1,16 +1,16 @@
 import React from 'react'
 
-const goalItem = ({ item, toggleComplete }) => (
+const goalItem = (props) => (
   <li>
-    <p>{item.title}</p>
+    <p>{props.item}</p>
     <div>
       <input
         type="checkbox"
-        id={item.id}
-        checked={item.complete}
+        id={props.item.id}
+        checked={props.item.complete}
         onChange={this.toggleComplete}
       />
-      <label htmlFor={item.id}></label>
+      <label htmlFor={props.item.id}></label>
       <button>
         <i className="fa fa-trash"></i>
       </button>

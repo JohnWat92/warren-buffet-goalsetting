@@ -1,6 +1,23 @@
 import React, { Component } from 'react';
 import './App.css';
-import goalItem from '../../components/goalItem';
+
+const GoalItem = ({item, toggleComplete, removeGoal}) => (
+  <li>
+    {item.title}
+    <div>
+      <input
+        type="checkbox"
+        id={item.id}
+        checked={item.complete}
+        onChange={toggleComplete}
+      />
+      <label htmlFor={item.id}></label>
+      <button onClick={removeGoal}>
+        <i className="fa fa-trash"></i>
+      </button>
+    </div>
+  </li>
+);
 
 class App extends Component {
   constructor(){
@@ -12,7 +29,8 @@ class App extends Component {
         { id: 2, title: 'Learn Havascript', complete: false }
       ],
       lastId: 2,
-      inputValue:''
+      inputValue:'',
+      selected: false,
     };
   }
   toggleComplete(item){
@@ -33,6 +51,12 @@ class App extends Component {
       })
     }
   }
+  removeGoal(item){
+    let newGoals = this.state.goals.filter((goal) => {
+      return goal.id !== item.id;
+    });
+    this.setState({ goals: newGoals})
+  }
   onInputChange(e){
     this.setState({ inputValue: e.target.value })
   }
@@ -40,7 +64,6 @@ class App extends Component {
     this.goalInput.focus();
   }
   render() {
-    console.log(this.state)
     return (
       <div className="App">
           <h2>Welcome Warren Buffet's Two List Strategy!</h2>
@@ -52,10 +75,11 @@ class App extends Component {
           </div>
           <ul>
             {this.state.goals.map((goal, i) => (
-              <goalItem
+              <GoalItem
                 key={i}
                 item={goal}
                 toggleComplete={this.toggleComplete.bind(this, goal)}
+                removeGoal={() => this.removeGoal(goal)}
               />
             ))}
           </ul>
