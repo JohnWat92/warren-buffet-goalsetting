@@ -24,14 +24,15 @@ class App extends Component {
     super();
     this.state = {
       goals: [
-        { id: 0, title: 'Learn React', complete: false },
-        { id: 1, title: 'Learn Redux', complete: true },
-        { id: 2, title: 'Learn Havascript', complete: false }
+        { id: 0, title: 'Read lots', complete: false, selected: false },
+        { id: 1, title: 'code everyday', complete: true, selected: false },
+        { id: 2, title: 'follow my routines', complete: false, selected: false }
       ],
       lastId: 2,
-      inputValue:'',
+      inputValue: '',
       selected: false,
     };
+    this.addGoal = this.addGoal.bind(this);
   }
   toggleComplete(item){
     let newGoals = this.state.goals.map((goal) => {
@@ -44,11 +45,31 @@ class App extends Component {
       goals: newGoals
     });
   }
+  isSelected(){
+    let selectedGoals = this.state.goals.filter((goal) => goal.selected);
+    let numberSelected = selectedGoals.length
+    if(numberSelected < 5){
+      alert(`Please Select ${ 5 - numberSelected} more goals!`)
+    }else if(numberSelected === 5){
+      alert(`Here's your goals`)
+    }
+  }
+
+
   addGoal(e){
     e.preventDefault();
     if(this.state.inputValue){
+      const id = this.state.lastId + 1;
       const newGoals = this.state.goals.concat({
+        id,
+        title: this.state.inputValue,
+        complete: false
       })
+      this.setState({
+        goals: newGoals,
+        lastId: id
+      });
+      this.setState({ inputValue: '' })
     }
   }
   removeGoal(item){
@@ -68,7 +89,7 @@ class App extends Component {
       <div className="App">
           <h2>Welcome Warren Buffet's Two List Strategy!</h2>
           <div>
-            <form>
+            <form name="addGoal" onSubmit={this.addGoal}>
               <input type="text" value={this.state.inputValue} ref={(input) => (this.goalInput = input)} onChange={(e) => this.onInputChange(e)} />
               <span>(press enter to add)</span>
             </form>
