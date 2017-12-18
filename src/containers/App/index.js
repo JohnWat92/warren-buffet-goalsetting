@@ -24,7 +24,7 @@ class App extends Component {
     super();
     this.state = {
       goals: [
-        { id: 0, title: 'Read lots', complete: false, selected: false },
+        { id: 0, title: 'Read lots', complete: false, selected: true },
         { id: 1, title: 'code everyday', complete: true, selected: false },
         { id: 2, title: 'follow my routines', complete: false, selected: false }
       ],
@@ -35,6 +35,7 @@ class App extends Component {
     this.addGoal = this.addGoal.bind(this);
   }
   toggleComplete(item){
+    let selected = this.state.goals.filter((goal) => goal.complete)
     let newGoals = this.state.goals.map((goal) => {
       if(item.id === goal.id){
         goal.complete = !goal.complete;
@@ -60,16 +61,20 @@ class App extends Component {
     e.preventDefault();
     if(this.state.inputValue){
       const id = this.state.lastId + 1;
-      const newGoals = this.state.goals.concat({
-        id,
-        title: this.state.inputValue,
-        complete: false
-      })
-      this.setState({
-        goals: newGoals,
-        lastId: id
-      });
-      this.setState({ inputValue: '' })
+      if(id <= 24){
+        const newGoals = this.state.goals.concat({
+          id,
+          title: this.state.inputValue,
+          complete: false
+        })
+        this.setState({
+          goals: newGoals,
+          lastId: id
+        });
+        this.setState({ inputValue: '' })
+      }else{
+        alert(`You have enough goals!, select 5 goals that means the most to you`)
+      }
     }
   }
   removeGoal(item){
