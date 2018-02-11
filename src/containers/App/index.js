@@ -30,7 +30,7 @@ class App extends Component {
       ],
       lastId: 2,
       inputValue: '',
-      selected: false,
+      selected: true,
     };
     this.addGoal = this.addGoal.bind(this);
   }
@@ -99,7 +99,9 @@ class App extends Component {
               <span>(press enter to add)</span>
             </form>
           </div>
-          <ul>
+
+          {this.state.selected ?
+            <ul>
             {this.state.goals.map((goal, i) => (
               <GoalItem
                 key={i}
@@ -109,6 +111,8 @@ class App extends Component {
               />
             ))}
           </ul>
+          :
+        <p>selected</p>}
       </div>
     );
   }
