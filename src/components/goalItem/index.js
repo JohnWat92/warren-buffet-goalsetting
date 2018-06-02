@@ -1,21 +1,21 @@
 import React from 'react'
 
-const goalItem = (props) => (
+const GoalItem = ({item, toggleComplete, removeGoal}) => (
   <li>
-    <p>{props.item}</p>
+    {item.title}
     <div>
       <input
         type="checkbox"
-        id={props.item.id}
-        checked={props.item.complete}
-        onChange={this.toggleComplete}
+        id={item.id}
+        checked={item.selected}
+        onChange={toggleComplete}
       />
-      <label htmlFor={props.item.id}></label>
-      <button>
+      <label htmlFor={item.id}></label>
+      <button onClick={removeGoal}>
         <i className="fa fa-trash"></i>
       </button>
     </div>
   </li>
-)
+);
 
-export default goalItem;
+export default GoalItem;

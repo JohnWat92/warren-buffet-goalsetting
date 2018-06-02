@@ -26,3 +26,6 @@ ul {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+.seperated p{
+  text-align: left;
+}
